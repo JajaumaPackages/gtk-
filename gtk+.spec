@@ -1,9 +1,9 @@
 
-Summary: The GIMP ToolKit (GTK+), a library for creating GUIs for X
+Summary: The GIMP ToolKit
 Name: 	 gtk+
 Epoch:	 1
 Version: 1.2.10
-Release: 52%{?dist}
+Release: 53%{?dist}
 
 License: LGPL
 Group:	 System Environment/Libraries
@@ -247,6 +247,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jun 15 2006 Rex Dieter <rexdieter[AT]users.sf.net> 1:1.2.10-53
+- respin, see if still buildable with new mock config (bug #193397)
+
 * Mon Apr 24 2006 Rex Dieter <rexdieter[AT]users.sf.net> 1:1.2.10-52
 - install -m644 gtkrc ...
 - utf-8 specfile
