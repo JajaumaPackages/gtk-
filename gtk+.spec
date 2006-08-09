@@ -3,7 +3,7 @@ Summary: The GIMP ToolKit
 Name: 	 gtk+
 Epoch:	 1
 Version: 1.2.10
-Release: 53%{?dist}
+Release: 54%{?dist}
 
 License: LGPL
 Group:	 System Environment/Libraries
@@ -247,6 +247,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Aug 09 2006 Rex Dieter <rexdieter[AT]users.sf.net> 1:1.2.10-54
+- fc6 respin
+
 * Thu Jun 15 2006 Rex Dieter <rexdieter[AT]users.sf.net> 1:1.2.10-53
 - respin, see if still buildable with new mock config (bug #193397)
 
