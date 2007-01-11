@@ -71,7 +71,6 @@ Patch33: gtk+-1.2.10-no_undefined.patch
 Patch34: gtk+-1.2.10-multilib.patch
 
 BuildRequires: glib-devel >= 1:%{version}
-## auto-req -- Rex
 #Requires:     glib >= 1:%{version}
 BuildRequires: automake14 autoconf213
 BuildRequires: libtool
@@ -137,27 +136,28 @@ Libraries, header files and documentation for developing GTK+
 %patch33 -p1 -b .no_undefined
 %patch34 -p1 -b .multilib
 
-cp -f %{_datadir}/aclocal/libtool.m4 .
-libtoolize --copy --force
+#cp -f %{_datadir}/aclocal/libtool.m4 .
+#libtoolize --copy --force
 automake-1.4
-aclocal-1.4
+#aclocal-1.4
 autoconf-2.13
 autoheader-2.13
 
 
 %build
+LIBTOOL=%{_bindir}/libtool \
 %configure \
   --disable-static \
   --with-xinput=xfree\
   --with-native-locale
 
-make %{?_smp_mflags} 
+make %{?_smp_mflags} LIBTOOL=%{_bindir}/libtool
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT 
+make install DESTDIR=$RPM_BUILD_ROOT LIBTOOL=%{_bindir}/libtool
 
 #
 # Make cleaned-up versions of examples and tutorial for installation
@@ -200,7 +200,7 @@ rm -f  $RPM_BUILD_ROOT%{_libdir}/lib*.a
 
 # I *know* ||: isn't needed, but this could end up used by legacy
 %check ||:
-make check 
+make check LIBTOOL=%{_bindir}/libtool
 
 
 %clean
@@ -234,6 +234,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jan 11 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 1:1.2.10-57
+- revert libtool-related breakage 
+
 * Thu Jan 11 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 1:1.2.10-56
 - multilib patch (#222298)
 - cleanup auto*/libtool foo 
