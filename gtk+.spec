@@ -3,7 +3,7 @@ Summary: The GIMP ToolKit
 Name: 	 gtk+
 Epoch:	 1
 Version: 1.2.10
-Release: 55%{?dist}
+Release: 56%{?dist}
 
 License: LGPL
 Group:	 System Environment/Libraries
@@ -61,37 +61,29 @@ Patch28: gtk+-1.2.10-bellvolume.patch
 # Hack up the configure scripts to deal with some obscure
 # breakage with ancient libtool
 Patch29: gtk+-1.2.10-libtool.patch
-# Add a dependency on libgdk to libgtk
+# Add a dependency on libgdk to libgtk (#106677)
 Patch30: gtk+-1.2.10-gtkgdkdep.patch
 Patch31: gtk+-underquoted.patch
 Patch32: gtk+-1.2.10-ppc64.patch
 # do not allow for undefined symbols in shared libraries -- Rex
 Patch33: gtk+-1.2.10-no_undefined.patch
+# http://bugzilla.redhat.com/222298
+Patch34: gtk+-1.2.10-multilib.patch
 
 BuildRequires: glib-devel >= 1:%{version}
+## auto-req -- Rex
+#Requires:     glib >= 1:%{version}
 BuildRequires: automake14 autoconf213
 BuildRequires: libtool
 BuildRequires: gettext
-## This can theoretically be used for legacy -- Rex
-%if "%{?fedora}" > "4"
-BuildRequires: libX11-devel libXext-devel libXi-devel libXt-devel
+%if 0%{?fedora} > 4 || 0%{?rhel} > 4
+%define x_deps  libX11-devel libXext-devel libXi-devel libXt-devel
 %else
-BuildRequires: XFree86-devel
+%define x_deps	xorg-x11-devel
+## This can be used for legacy too -- Rex
+#define	x_deps	Xree86-devel
 %endif
-
-## *very* old, deprecated Obsoletes (pun intended) -- Rex
-#Obsoletes: gtk 
-## auto-req -- Rex
-#Requires: glib >= 1:%{version}
-
-# The highly broken gdk-pixbuf circular dependency is
-# added so that when you install gtk+, you get the 
-# dependencies you need for the Bluecurve GTK+-1.2 theme
-# engine that redhat-artwork installs without proper
-# dependencies.
-#
-## Ack, No-way, hosay.  -- Rex
-# Requires: gdk-pixbuf >= 0.18.0
+BuildRequires: %{x_deps} 
 
 %description
 The gtk+ package contains the GIMP ToolKit (GTK+), a library for
@@ -106,14 +98,7 @@ Group: Development/Libraries
 Requires: %{name} = %{epoch}:%{version}-%{release}
 Requires: glib-devel
 Requires: pkgconfig
-## this can theoretically be used for legacy -- Rex
-#if "%{?fedora}" > "4"
-Requires: libX11-devel, libXext-devel, libXi-devel
-#else
-#Requires: XFree86-devel
-#endif
-## *very* old, deprecated Obsoletes (pun intended) -- Rex
-#Obsoletes: gtk-devel < %{epoch}:%{version}
+Requires: %{x_deps} 
 ## info files not included
 #Requires(post): /sbin/install-info
 #Requires(preun): /sbin/install-info
@@ -150,28 +135,29 @@ Libraries, header files and documentation for developing GTK+
 %patch31 -p1 -b .underquoted
 %patch32 -p1 -b .ppc64
 %patch33 -p1 -b .no_undefined
+%patch34 -p1 -b .multilib
 
-#libtoolize --force
+cp -f %{_datadir}/aclocal/libtool.m4 .
+libtoolize --copy --force
 automake-1.4
-#aclocal-1.4
+aclocal-1.4
 autoconf-2.13
 autoheader-2.13
 
 
 %build
-LIBTOOL=/usr/bin/libtool \
 %configure \
   --disable-static \
   --with-xinput=xfree\
   --with-native-locale
 
-make %{?_smp_mflags} LIBTOOL=/usr/bin/libtool
+make %{?_smp_mflags} 
 
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT LIBTOOL=/usr/bin/libtool
+make install DESTDIR=$RPM_BUILD_ROOT 
 
 #
 # Make cleaned-up versions of examples and tutorial for installation
@@ -214,7 +200,7 @@ rm -f  $RPM_BUILD_ROOT%{_libdir}/lib*.a
 
 # I *know* ||: isn't needed, but this could end up used by legacy
 %check ||:
-make check LIBTOOL=/usr/bin/libtool
+make check 
 
 
 %clean
@@ -232,7 +218,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.so.*
 %dir %{_datadir}/themes
 %{_datadir}/themes/Default/
-%config(noreplace) %{_sysconfdir}/gtk/
+%dir %{_sysconfdir}/gtk/
+%config(noreplace) %{_sysconfdir}/gtk/*
 
 %files devel
 %defattr(-,root,root,-)
@@ -247,6 +234,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jan 11 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 1:1.2.10-56
+- multilib patch (#222298)
+- cleanup auto*/libtool foo 
+- drop old/deprecated bits
+
 * Tue Aug 29 2006 Rex Dieter <rexdieter[AT]users.sf.net> 1:1.2.10-55
 - fc6 respin
 
