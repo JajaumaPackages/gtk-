@@ -3,7 +3,7 @@ Summary: The GIMP ToolKit
 Name: 	 gtk+
 Epoch:	 1
 Version: 1.2.10
-Release: 58%{?dist}
+Release: 59%{?dist}
 
 License: LGPLv2+
 Group:	 System Environment/Libraries
@@ -234,6 +234,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Aug 21 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 1:1.2.10-59
+- respin (BuildID)
+
 * Sat Aug 11 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 1:1.2.10-58
 - License: LGPLv2+
 
