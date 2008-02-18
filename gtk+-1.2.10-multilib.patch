@@ -1,12 +1,22 @@
---- gtk+-1.2.10/gtk-config.in.multilib	2007-01-11 10:22:17.000000000 -0500
-+++ gtk+-1.2.10/gtk-config.in	2007-01-11 10:33:01.000000000 -0500
-@@ -5,8 +5,11 @@
- glib_thread_libs="@glib_thread_libs@"
- glib_thread_cflags="@glib_thread_cflags@"
+diff -up gtk+-1.2.10/gtk-config.in.multilib gtk+-1.2.10/gtk-config.in
+--- gtk+-1.2.10/gtk-config.in.multilib	2000-10-21 13:20:40.000000000 -0500
++++ gtk+-1.2.10/gtk-config.in	2008-02-18 10:49:03.000000000 -0600
+@@ -1,12 +1,16 @@
+ #!/bin/sh
+ 
+-glib_libs="@glib_libs@"
+-glib_cflags="@glib_cflags@"
+-glib_thread_libs="@glib_thread_libs@"
+-glib_thread_cflags="@glib_thread_cflags@"
++[ -z "$PKG_CONFIG" ] && PKG_CONFIG="pkg-config"
  
 -prefix=@prefix@
 -exec_prefix=@exec_prefix@
-+[ -z "$PKG_CONFIG" ] && PKG_CONFIG="pkg-config"
++glib_libs=`${PKG_CONFIG} --libs glib gmodule`
++glib_cflags=`${PKG_CONFIG} --cflags glib gmodule`
++glib_thread_libs=`${PKG_CONFIG} --libs gthread`
++glib_thread_cflags=`${PKG_CONFIG} --cflags gthread`
++
 +prefix=`${PKG_CONFIG} --variable prefix gtk+`
 +exec_prefix=`${PKG_CONFIG} --variable exec_prefix gtk+`
 +libdir=`${PKG_CONFIG} --variable libdir gtk+`
@@ -14,7 +24,7 @@
  exec_prefix_set=no
  
  usage()
-@@ -91,14 +94,14 @@
+@@ -91,14 +95,14 @@ if test "$lib_gthread" = "yes"; then
  fi
  
  if test "$echo_cflags" = "yes"; then
