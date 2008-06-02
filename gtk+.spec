@@ -8,8 +8,10 @@ Release: 61%{?dist}
 License: LGPLv2+
 Group:	 System Environment/Libraries
 URL:	 http://www.gtk.org/
-Source:  ftp://ftp.gimp.org/pub/gtk/v1.2/gtk+-%{version}.tar.gz
+Source0: ftp://ftp.gimp.org/pub/gtk/v1.2/gtk+-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+Provides: gtk1 = %{version}-%{release}
 
 Source1: gtkrc-default
 Source2: gtk+-pofiles.tar.gz
@@ -94,6 +96,7 @@ well.
 %package devel
 Summary: Development tools for GTK+ (GIMP ToolKit) applications
 Group: Development/Libraries
+Provides: gtk1-devel = %{version}-%{release}
 Requires: %{name} = %{epoch}:%{version}-%{release}
 Requires: glib-devel
 Requires: pkgconfig
@@ -199,7 +202,7 @@ rm -f  $RPM_BUILD_ROOT%{_libdir}/lib*.a
 
 
 # I *know* ||: isn't needed, but this could end up used by legacy
-%check ||:
+%check
 make check LIBTOOL=%{_bindir}/libtool
 
 
@@ -234,6 +237,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Mar 10 2008 Rex Dieter <rdieter@fedoraproject.org> 1:1.2.10-62
+- Provides: gtk1(-devel)
+
 * Mon Feb 18 2008 Rex Dieter <rdieter@fedoraproject.org> 1:1.2.10-61
 - fix multilib patch (#341401)
 
