@@ -3,7 +3,7 @@ Summary: The GIMP ToolKit
 Name: 	 gtk+
 Epoch:	 1
 Version: 1.2.10
-Release: 61%{?dist}
+Release: 62%{?dist}
 
 License: LGPLv2+
 Group:	 System Environment/Libraries
