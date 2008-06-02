@@ -201,7 +201,6 @@ rm -f  $RPM_BUILD_ROOT%{_libdir}/lib*.a
 %find_lang %{name}
 
 
-# I *know* ||: isn't needed, but this could end up used by legacy
 %check
 make check LIBTOOL=%{_bindir}/libtool
 
