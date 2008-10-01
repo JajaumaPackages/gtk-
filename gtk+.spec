@@ -1,9 +1,10 @@
+%define _default_patch_fuzz 2
 
 Summary: The GIMP ToolKit
 Name: 	 gtk+
 Epoch:	 1
 Version: 1.2.10
-Release: 62%{?dist}
+Release: 63%{?dist}
 
 License: LGPLv2+
 Group:	 System Environment/Libraries
@@ -236,6 +237,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct 01 2008 Rex Dieter <rdieter@fedoraproject.org> 1:1.2.10-63
+- patch_fuzz, fix build (#465033)
+
 * Mon Mar 10 2008 Rex Dieter <rdieter@fedoraproject.org> 1:1.2.10-62
 - Provides: gtk1(-devel)
 
