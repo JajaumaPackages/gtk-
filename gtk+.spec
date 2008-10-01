@@ -4,7 +4,7 @@ Summary: The GIMP ToolKit
 Name: 	 gtk+
 Epoch:	 1
 Version: 1.2.10
-Release: 63%{?dist}
+Release: 64%{?dist}
 
 License: LGPLv2+
 Group:	 System Environment/Libraries
@@ -140,6 +140,11 @@ Libraries, header files and documentation for developing GTK+
 %patch33 -p1 -b .no_undefined
 %patch34 -p1 -b .multilib
 
+# The original config.{guess,sub} do not work on x86_64
+#
+# The following /usr/lib cannot be %%_libdir !!
+cp -p /usr/lib/rpm/config.{guess,sub} .
+
 #cp -f %{_datadir}/aclocal/libtool.m4 .
 #libtoolize --copy --force
 automake-1.4
@@ -237,6 +242,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Wed Oct  1 2008 Patrice Dumas <pertusus@free.fr> 1:1.2.10-64
+- copy config.* from rpm directory, those shpped with gtk+ are too old
+
 * Wed Oct 01 2008 Rex Dieter <rdieter@fedoraproject.org> 1:1.2.10-63
 - patch_fuzz, fix build (#465033)
 
