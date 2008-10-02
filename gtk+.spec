@@ -4,7 +4,7 @@ Summary: The GIMP ToolKit
 Name: 	 gtk+
 Epoch:	 1
 Version: 1.2.10
-Release: 64%{?dist}
+Release: 65%{?dist}
 
 License: LGPLv2+
 Group:	 System Environment/Libraries
@@ -242,8 +242,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Oct  2 2008 Patrice Dumas <pertusus@free.fr> 1:1.2.10-65
+- remove x_ldflags from gtk-config (#462650)
+
 * Wed Oct  1 2008 Patrice Dumas <pertusus@free.fr> 1:1.2.10-64
-- copy config.* from rpm directory, those shpped with gtk+ are too old
+- copy config.* from rpm directory, those shipped with gtk+ are too old
 
 * Wed Oct 01 2008 Rex Dieter <rdieter@fedoraproject.org> 1:1.2.10-63
 - patch_fuzz, fix build (#465033)
@@ -498,7 +501,7 @@ rm -rf $RPM_BUILD_ROOT
 - Up Epoch and release
 
 * Wed Jul 19 2000 Owen Taylor <otaylor@redhat.com>
-- Add BuildPreReq on glib = %{version}
+- Add BuildPreReq on glib = %%{version}
 
 * Thu Jul 13 2000 Prospector <bugzilla@redhat.com>
 - automatic rebuild
@@ -613,7 +616,7 @@ rm -rf $RPM_BUILD_ROOT
 - Fixed Source: to point to v1.1 
 
 * Tue Aug 04 1998 Michael Fulbright <msf@redhat.com>
-- change %postun to %preun
+- change %%postun to %%preun
 
 * Mon Jun 27 1998 Shawn T. Amundson
 - Changed version to 1.1.0

@@ -1,6 +1,6 @@
 diff -up gtk+-1.2.10/gtk-config.in.multilib gtk+-1.2.10/gtk-config.in
---- gtk+-1.2.10/gtk-config.in.multilib	2000-10-21 13:20:40.000000000 -0500
-+++ gtk+-1.2.10/gtk-config.in	2008-02-18 10:49:03.000000000 -0600
+--- gtk+-1.2.10/gtk-config.in.multilib	2000-10-21 20:20:40.000000000 +0200
++++ gtk+-1.2.10/gtk-config.in	2008-10-02 09:52:59.000000000 +0200
 @@ -1,12 +1,16 @@
  #!/bin/sh
  
@@ -42,3 +42,11 @@ diff -up gtk+-1.2.10/gtk-config.in.multilib gtk+-1.2.10/gtk-config.in
            if test -z "$my_glib_libs" ; then
              my_glib_libs="$i"
            else
+@@ -107,6 +111,6 @@ if test "$echo_libs" = "yes"; then
+         fi
+       done
+ 
+-      echo $libdirs @x_ldflags@ -lgtk -lgdk $my_glib_libs @INTLLIBS@ @x_libs@ @GDK_WLIBS@ -lm
++      echo $libdirs -lgtk -lgdk $my_glib_libs @INTLLIBS@ @x_libs@ @GDK_WLIBS@ -lm
+ fi      
+ 
