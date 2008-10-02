@@ -59,10 +59,10 @@ hacked by other than you.)
 Thanks,
 Akira Higuchi
 ---------------- x8 ---------------- x8 ---------------- x8 ----------------
-diff -ur gtk+-1.2.5-pre2/gdk/gdki18n.h gtk+-1.2.5-pre2.new/gdk/gdki18n.h
---- gtk+-1.2.5-pre2/gdk/gdki18n.h	Wed Jun  9 21:07:51 1999
-+++ gtk+-1.2.5-pre2.new/gdk/gdki18n.h	Thu Sep 23 14:59:38 1999
-@@ -50,4 +50,32 @@
+diff -up gtk+-1.2.10/gdk/gdki18n.h.ahiguti gtk+-1.2.10/gdk/gdki18n.h
+--- gtk+-1.2.10/gdk/gdki18n.h.ahiguti	2000-01-24 03:58:21.000000000 +0100
++++ gtk+-1.2.10/gdk/gdki18n.h	2008-10-02 10:43:26.000000000 +0200
+@@ -51,4 +51,32 @@
  #  define gdk_iswspace(c) ((wchar_t)(c) <= 0xFF && isspace(c))
  #endif
  
@@ -95,11 +95,11 @@ diff -ur gtk+-1.2.5-pre2/gdk/gdki18n.h gtk+-1.2.5-pre2.new/gdk/gdki18n.h
 +#endif
 +
  #endif /* __GDK_I18N_H__ */
-diff -ur gtk+-1.2.5-pre2/gtk/gtkentry.c gtk+-1.2.5-pre2.new/gtk/gtkentry.c
---- gtk+-1.2.5-pre2/gtk/gtkentry.c	Wed Aug 18 14:23:53 1999
-+++ gtk+-1.2.5-pre2.new/gtk/gtkentry.c	Thu Sep 23 00:22:21 1999
-@@ -1943,11 +1943,21 @@
-     gtk_move_backward_word (GTK_ENTRY (editable));
+diff -up gtk+-1.2.10/gtk/gtkentry.c.ahiguti gtk+-1.2.10/gtk/gtkentry.c
+--- gtk+-1.2.10/gtk/gtkentry.c.ahiguti	2001-04-02 04:14:54.000000000 +0200
++++ gtk+-1.2.10/gtk/gtkentry.c	2008-10-02 10:43:26.000000000 +0200
+@@ -2036,11 +2036,21 @@ gtk_entry_move_word (GtkEditable *editab
+     }
  }
  
 +static gboolean
@@ -121,7 +121,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtkentry.c gtk+-1.2.5-pre2.new/gtk/gtkentry.c
    gint i;
  
    editable = GTK_EDITABLE (entry);
-@@ -1961,21 +1971,12 @@
+@@ -2054,21 +2064,12 @@ gtk_move_forward_word (GtkEntry *entry)
  
    if (entry->text && (editable->current_pos < entry->text_length))
      {
@@ -148,7 +148,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtkentry.c gtk+-1.2.5-pre2.new/gtk/gtkentry.c
  
        editable->current_pos = i;
      }
-@@ -1985,7 +1986,6 @@
+@@ -2078,7 +2079,6 @@ static void
  gtk_move_backward_word (GtkEntry *entry)
  {
    GtkEditable *editable;
@@ -156,7 +156,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtkentry.c gtk+-1.2.5-pre2.new/gtk/gtkentry.c
    gint i;
  
    editable = GTK_EDITABLE (entry);
-@@ -1999,26 +1999,19 @@
+@@ -2092,26 +2092,19 @@ gtk_move_backward_word (GtkEntry *entry)
  
    if (entry->text && editable->current_pos > 0)
      {
@@ -192,10 +192,10 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtkentry.c gtk+-1.2.5-pre2.new/gtk/gtkentry.c
        editable->current_pos = i;
      }
  }
-diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
---- gtk+-1.2.5-pre2/gtk/gtklabel.c	Wed Jun  9 20:40:13 1999
-+++ gtk+-1.2.5-pre2.new/gtk/gtklabel.c	Thu Sep 23 11:29:25 1999
-@@ -56,6 +56,7 @@
+diff -up gtk+-1.2.10/gtk/gtklabel.c.ahiguti gtk+-1.2.10/gtk/gtklabel.c
+--- gtk+-1.2.10/gtk/gtklabel.c.ahiguti	2001-04-02 05:12:38.000000000 +0200
++++ gtk+-1.2.10/gtk/gtklabel.c	2008-10-02 10:43:26.000000000 +0200
+@@ -56,6 +56,7 @@ struct _GtkLabelWord
    GtkLabelWord *next;
    gint uline_y;
    GtkLabelULine *uline;
@@ -203,7 +203,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
  };
  
  struct _GtkLabelULine
-@@ -396,6 +397,7 @@
+@@ -396,6 +397,7 @@ gtk_label_word_alloc (void)
    word->beginning = NULL;
    word->next = NULL;
    word->uline = NULL;
@@ -211,7 +211,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
  
    return word;
  }
-@@ -441,6 +443,7 @@
+@@ -441,6 +443,7 @@ gtk_label_split_text (GtkLabel *label)
        if (str == label->label_wc || str[-1] == '\n')
  	{
  	  /* Paragraph break */
@@ -219,7 +219,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
  	  word->space = 0;
  	  
  	  max_line_width = MAX (line_width, max_line_width);
-@@ -488,6 +491,7 @@
+@@ -488,6 +491,7 @@ gtk_label_split_text (GtkLabel *label)
      {
        word = gtk_label_word_alloc ();
        
@@ -227,7 +227,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
        word->space = 0;
        word->beginning = str;
        word->length = 0;
-@@ -500,6 +504,13 @@
+@@ -500,6 +504,13 @@ gtk_label_split_text (GtkLabel *label)
    return MAX (line_width, max_line_width);
  }
  
@@ -241,7 +241,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
  /* this needs to handle white space better. */
  static gint
  gtk_label_split_text_wrapped (GtkLabel *label)
-@@ -526,6 +537,7 @@
+@@ -526,6 +537,7 @@ gtk_label_split_text_wrapped (GtkLabel *
        if (str == label->label_wc || str[-1] == '\n')
  	{
  	  /* Paragraph break */
@@ -249,7 +249,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
  	  word->space = 0;
  	  
  	  max_line_width = MAX (line_width, max_line_width);
-@@ -546,24 +558,30 @@
+@@ -546,24 +558,30 @@ gtk_label_split_text_wrapped (GtkLabel *
  	  else
  	    word->space = space_width * nspaces;
  	}
@@ -282,7 +282,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
  	str++;
        
        line_width += word->space + word->width;
-@@ -600,7 +618,7 @@
+@@ -600,7 +618,7 @@ gtk_label_pick_width (GtkLabel *label,
    width = 0;
    for (word = label->words; word; word = word->next)
      {
@@ -291,7 +291,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
  	  || (line_width
  	      && (line_width >= min_width
  		  || line_width + word->width + word->space > max_width)))
-@@ -716,7 +734,8 @@
+@@ -716,7 +734,8 @@ gtk_label_finalize_lines_wrap (GtkLabel 
    GtkLabelWord *word, *line, *next_line;
    GtkWidget *widget;
    gchar *ptrn;
@@ -301,7 +301,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
    
    g_return_if_fail (label->wrap);
    
-@@ -724,20 +743,24 @@
+@@ -724,20 +743,24 @@ gtk_label_finalize_lines_wrap (GtkLabel 
    y = 0;
    baseline_skip = (GTK_WIDGET (label)->style->font->ascent +
  		   GTK_WIDGET (label)->style->font->descent + 1);
@@ -328,7 +328,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
  	}
        
        line->x = 0;
-@@ -747,14 +770,18 @@
+@@ -747,14 +770,18 @@ gtk_label_finalize_lines_wrap (GtkLabel 
        
        for (word = line->next; word != next_line; word = word->next)
  	{
@@ -353,7 +353,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
  	    }
  	  
  	  word->x = x + word->space + add_space;
-@@ -925,7 +952,7 @@
+@@ -925,7 +952,7 @@ gtk_label_expose (GtkWidget      *widget
  
        for (word = label->words; word; word = word->next)
  	{
@@ -362,10 +362,10 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtklabel.c gtk+-1.2.5-pre2.new/gtk/gtklabel.c
  	  word->beginning[word->length] = '\0';
  	  gtk_label_paint_word (label, x, y, word, &event->area);
  	  word->beginning[word->length] = save;
-diff -ur gtk+-1.2.5-pre2/gtk/gtktext.c gtk+-1.2.5-pre2.new/gtk/gtktext.c
---- gtk+-1.2.5-pre2/gtk/gtktext.c	Sat Sep  4 08:50:38 1999
-+++ gtk+-1.2.5-pre2.new/gtk/gtktext.c	Thu Sep 23 00:21:40 1999
-@@ -101,6 +101,13 @@
+diff -up gtk+-1.2.10/gtk/gtktext.c.ahiguti gtk+-1.2.10/gtk/gtktext.c
+--- gtk+-1.2.10/gtk/gtktext.c.ahiguti	2001-03-15 21:15:12.000000000 +0100
++++ gtk+-1.2.10/gtk/gtktext.c	2008-10-02 10:43:27.000000000 +0200
+@@ -101,6 +101,13 @@ enum {
    ARG_WORD_WRAP
  };
  
@@ -379,7 +379,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtktext.c gtk+-1.2.5-pre2.new/gtk/gtktext.c
  typedef struct _TextProperty          TextProperty;
  typedef struct _TabStopMark           TabStopMark;
  typedef struct _PrevTabCont           PrevTabCont;
-@@ -298,6 +305,8 @@
+@@ -300,6 +307,8 @@ static LineParams find_line_params (GtkT
  				    const GtkPropertyMark *mark,
  				    const PrevTabCont *tab_cont,
  				    PrevTabCont *next_cont);
@@ -388,7 +388,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtktext.c gtk+-1.2.5-pre2.new/gtk/gtktext.c
  static void recompute_geometry (GtkText* text);
  static void insert_expose (GtkText* text, guint old_pixels, gint nchars, guint new_line_count);
  static void delete_expose (GtkText* text,
-@@ -4084,27 +4093,21 @@
+@@ -4111,27 +4120,21 @@ gtk_text_move_forward_word (GtkText *tex
    
    undraw_cursor (text, FALSE);
    
@@ -427,7 +427,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtktext.c gtk+-1.2.5-pre2.new/gtk/gtktext.c
    find_cursor (text, TRUE);
    draw_cursor (text, FALSE);
  }
-@@ -4116,25 +4119,19 @@
+@@ -4143,25 +4146,19 @@ gtk_text_move_backward_word (GtkText *te
    
    undraw_cursor (text, FALSE);
    
@@ -463,7 +463,7 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtktext.c gtk+-1.2.5-pre2.new/gtk/gtktext.c
      }
    
    find_cursor (text, TRUE);
-@@ -4755,27 +4752,8 @@
+@@ -4782,27 +4779,8 @@ find_line_params (GtkText* text,
  		      GtkPropertyMark saved_mark = lp.end;
  		      guint saved_characters = lp.displayable_chars;
  		      
@@ -493,12 +493,10 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtktext.c gtk+-1.2.5-pre2.new/gtk/gtktext.c
  		      /* If whole line is one word, revert to char wrapping */
  		      if (lp.end.index == lp.start.index)
  			{
-@@ -4821,6 +4799,54 @@
-   lp.tab_cont_next = *next_cont;
-   
+@@ -4850,6 +4828,54 @@ find_line_params (GtkText* text,
    return lp;
-+}
-+
+ }
+ 
 +static CharClass
 +char_class (GtkText* text, guint index)
 +{
@@ -545,9 +543,11 @@ diff -ur gtk+-1.2.5-pre2/gtk/gtktext.c gtk+-1.2.5-pre2.new/gtk/gtktext.c
 +  if (lp->end.index > lp->start.index &&
 +      char_class (text, lp->end.index) != CHAR_CLASS_SPACE)
 +    decrement_mark (&lp->end);
- }
- 
++}
++
  static void
+ expand_scratch_buffer (GtkText* text, guint len)
+ {
 ---------------- x8 ---------------- x8 ---------------- x8 ----------------
 
 --------------------------------------

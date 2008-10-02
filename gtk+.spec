@@ -1,10 +1,8 @@
-%define _default_patch_fuzz 2
-
 Summary: The GIMP ToolKit
 Name: 	 gtk+
 Epoch:	 1
 Version: 1.2.10
-Release: 65%{?dist}
+Release: 66%{?dist}
 
 License: LGPLv2+
 Group:	 System Environment/Libraries
@@ -21,7 +19,7 @@ Source4: gtkrc.ko.utf8
 Source5: gtkrc.zh_CN.utf8
 Source6: gtkrc.zh_TW.utf8
 
-Patch1: gtk+-1.2.6-ahiguti.patch
+Patch1: gtk+-1.2.10-ahiguti.patch
 Patch5: gtk+-1.2.8-wrap-alnum.patch
 # Supress alignment warnings on ia64
 Patch10: gtk+-1.2.10-alignment.patch
@@ -242,6 +240,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Oct  2 2008 Patrice Dumas <pertusus@free.fr> 1:1.2.10-66
+- rebase the ahiguti patch
+
 * Thu Oct  2 2008 Patrice Dumas <pertusus@free.fr> 1:1.2.10-65
 - remove x_ldflags from gtk-config (#462650)
 
