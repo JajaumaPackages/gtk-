@@ -1,89 +1,89 @@
-Summary: The GIMP ToolKit
-Name: 	 gtk+
-Epoch:	 1
-Version: 1.2.10
-Release: 67%{?dist}
+Summary:	The GIMP ToolKit
+Name:		gtk+
+Epoch:		1
+Version:	1.2.10
+Release:	68%{?dist}
+License:	LGPLv2+
+Group:		System Environment/Libraries
+URL:		http://www.gtk.org/
+Source0:	ftp://ftp.gimp.org/pub/gtk/v1.2/gtk+-%{version}.tar.gz
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-License: LGPLv2+
-Group:	 System Environment/Libraries
-URL:	 http://www.gtk.org/
-Source0: ftp://ftp.gimp.org/pub/gtk/v1.2/gtk+-%{version}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Provides:	gtk1 = %{version}-%{release}
 
-Provides: gtk1 = %{version}-%{release}
+Source1:	gtkrc-default
+Source2:	gtk+-pofiles.tar.gz
+Source3:	gtkrc.ja.utf8
+Source4:	gtkrc.ko.utf8
+Source5:	gtkrc.zh_CN.utf8
+Source6:	gtkrc.zh_TW.utf8
 
-Source1: gtkrc-default
-Source2: gtk+-pofiles.tar.gz
-Source3: gtkrc.ja.utf8
-Source4: gtkrc.ko.utf8
-Source5: gtkrc.zh_CN.utf8
-Source6: gtkrc.zh_TW.utf8
-
-Patch1: gtk+-1.2.10-ahiguti.patch
-Patch5: gtk+-1.2.8-wrap-alnum.patch
-# Supress alignment warnings on ia64
-Patch10: gtk+-1.2.10-alignment.patch
+Patch1:		gtk+-1.2.10-ahiguti.patch
+Patch5:		gtk+-1.2.8-wrap-alnum.patch
+# Suppress alignment warnings on ia64
+Patch10:	gtk+-1.2.10-alignment.patch
 # Improve exposure compression
-Patch11: gtk+-1.2.10-expose.patch
+Patch11:	gtk+-1.2.10-expose.patch
 # Handle focus tracking for embedded window properly
-Patch12: gtk+-1.2.10-focus.patch
+Patch12:	gtk+-1.2.10-focus.patch
 # Find gtkrc files for the current encoding better
-Patch13: gtk+-1.2.10-encoding.patch
+Patch13:	gtk+-1.2.10-encoding.patch
 # Don't screw up CTEXT encoding for UTF-8
-Patch14: gtk+-1.2.10-ctext.patch
+Patch14:	gtk+-1.2.10-ctext.patch
 # Don't warn about missing fonts for UTF-8
-Patch15: gtk+-1.2.10-utf8fontset.patch
+Patch15:	gtk+-1.2.10-utf8fontset.patch
 # Accept KP_Enter as a synonym for Return everywhere
-Patch16: gtk+-1.2.10-kpenter.patch
+Patch16:	gtk+-1.2.10-kpenter.patch
 # Allow theme switching to work properly when no windows are realized
-Patch17: gtk+-1.2.10-themeswitch.patch
+Patch17:	gtk+-1.2.10-themeswitch.patch
 # Fix crash when switching themes
-Patch18: gtk+-1.2.10-pixmapref.patch
+Patch18:	gtk+-1.2.10-pixmapref.patch
 # Fix computation of width of missing characters
-Patch19: gtk+-1.2.10-missingchar.patch
+Patch19:	gtk+-1.2.10-missingchar.patch
 # Fix sizes of Ukrainian fontsets
-Patch20: gtk+-1.2.10-ukfont.patch
+Patch20:	gtk+-1.2.10-ukfont.patch
 # Fix file selection delete-dir when changing directory problem
 # also, fix memory corruption problem when changing directories.
-Patch21: gtk+-1.2.10-deletedir.patch
+Patch21:	gtk+-1.2.10-deletedir.patch
 # Improve warning for missing fonts
-Patch22: gtk+-1.2.10-fontwarning.patch
+Patch22:	gtk+-1.2.10-fontwarning.patch
 # Allow themes to make scrollbar trough always repaint
-Patch23: gtk+-1.2.10-troughpaint.patch
+Patch23:	gtk+-1.2.10-troughpaint.patch
 # Fix a crash that can happen in some apps when the current
 # locale is not supported by XLib.
-Patch24: gtk+-1.2.10-localecrash.patch
+Patch24:	gtk+-1.2.10-localecrash.patch
 # Patch from CVS to fix b.g.o #56349
-Patch26: gtk+-1.2.10-dndorder.patch
+Patch26:	gtk+-1.2.10-dndorder.patch
 # Patch from CVS to fix b.g.o #94812
-Patch27: gtk+-1.2.10-clistfocusrow.patch
+Patch27:	gtk+-1.2.10-clistfocusrow.patch
 # Fix GTK+ to obey X server's default bell volume
-Patch28: gtk+-1.2.10-bellvolume.patch
+Patch28:	gtk+-1.2.10-bellvolume.patch
 # Hack up the configure scripts to deal with some obscure
 # breakage with ancient libtool
-Patch29: gtk+-1.2.10-libtool.patch
+Patch29:	gtk+-1.2.10-libtool.patch
 # Add a dependency on libgdk to libgtk (#106677)
-Patch30: gtk+-1.2.10-gtkgdkdep.patch
-Patch31: gtk+-underquoted.patch
-Patch32: gtk+-1.2.10-ppc64.patch
+Patch30:	gtk+-1.2.10-gtkgdkdep.patch
+Patch31:	gtk+-underquoted.patch
+Patch32:	gtk+-1.2.10-ppc64.patch
 # do not allow for undefined symbols in shared libraries -- Rex
-Patch33: gtk+-1.2.10-no_undefined.patch
+Patch33:	gtk+-1.2.10-no_undefined.patch
 # http://bugzilla.redhat.com/222298
-Patch34: gtk+-1.2.10-multilib.patch
+Patch34:	gtk+-1.2.10-multilib.patch
+# Remove redundant shared library dependencies
+Patch35:	gtk+-1.2.10-unused-deps.patch
 
-BuildRequires: glib-devel >= 1:%{version}
-#Requires:     glib >= 1:%{version}
-BuildRequires: automake14 autoconf213
-BuildRequires: libtool
-BuildRequires: gettext
+BuildRequires:	glib-devel >= 1:%{version}
+BuildRequires:	automake14 autoconf213
+BuildRequires:	libtool
+BuildRequires:	gettext
 %if 0%{?fedora} > 4 || 0%{?rhel} > 4
-%define x_deps  libX11-devel libXext-devel libXi-devel libXt-devel
+%global x_deps	libX11-devel libXext-devel libXi-devel libXt-devel
 %else
-%define x_deps	xorg-x11-devel
+%global x_deps	xorg-x11-devel
 ## This can be used for legacy too -- Rex
-#define	x_deps	Xree86-devel
+#global	x_deps	XFree86-devel
 %endif
-BuildRequires: %{x_deps} 
+BuildRequires:	%{x_deps} 
 
 %description
 The gtk+ package contains the GIMP ToolKit (GTK+), a library for
@@ -92,17 +92,18 @@ originally written for the GIMP (GNU Image Manipulation Program) image
 processing program, but is now used by several other programs as
 well.
 
-%package devel
-Summary: Development tools for GTK+ (GIMP ToolKit) applications
-Group: Development/Libraries
-Provides: gtk1-devel = %{version}-%{release}
-Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: glib-devel
-Requires: pkgconfig
-Requires: %{x_deps} 
+%package	devel
+Summary:	Development tools for GTK+ (GIMP ToolKit) applications
+Group:		Development/Libraries
+Provides:	gtk1-devel = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	glib-devel
+Requires:	pkgconfig
+Requires:	%{x_deps} 
 ## info files not included
 #Requires(post): /sbin/install-info
 #Requires(preun): /sbin/install-info
+
 %description devel
 Libraries, header files and documentation for developing GTK+ 
 (GIMP ToolKit) applications.
@@ -137,80 +138,86 @@ Libraries, header files and documentation for developing GTK+
 %patch32 -p1 -b .ppc64
 %patch33 -p1 -b .no_undefined
 %patch34 -p1 -b .multilib
+%patch35 -p1 -b .unused-deps
 
 # The original config.{guess,sub} do not work on x86_64
 #
 # The following /usr/lib cannot be %%_libdir !!
-cp -p /usr/lib/rpm/config.{guess,sub} .
+%{__cp} -p /usr/lib/rpm/config.{guess,sub} .
 
-#cp -f %{_datadir}/aclocal/libtool.m4 .
-#libtoolize --copy --force
-automake-1.4
-#aclocal-1.4
-autoconf-2.13
-autoheader-2.13
+#%{__cp} -f %{_datadir}/aclocal/libtool.m4 .
+#/usr/bin/libtoolize --copy --force
+/usr/bin/automake-1.4
+#/usr/bin/aclocal-1.4
+/usr/bin/autoconf-2.13
+/usr/bin/autoheader-2.13
 
+# Recode docs as UTF-8
+for doc in ChangeLog examples/calendar/calendar.c; do
+	/usr/bin/iconv -f iso-8859-1 -t utf-8 < ${doc} > ${doc}.utf8
+	%{__mv} ${doc}.utf8 ${doc}
+done
 
 %build
 LIBTOOL=%{_bindir}/libtool \
 %configure \
-  --disable-static \
-  --with-xinput=xfree\
-  --with-native-locale
+	--disable-static \
+	--with-xinput=xfree \
+	--with-native-locale
 
-make %{?_smp_mflags} LIBTOOL=%{_bindir}/libtool
+%{__make} %{?_smp_mflags} LIBTOOL=%{_bindir}/libtool
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
+%{__rm} -rf %{buildroot}
 
-make install DESTDIR=$RPM_BUILD_ROOT LIBTOOL=%{_bindir}/libtool
+%{__make} install DESTDIR=%{buildroot} LIBTOOL=%{_bindir}/libtool INSTALL="%{__install} -p"
 
 #
 # Make cleaned-up versions of examples and tutorial for installation
 #
 ./mkinstalldirs tmpdocs/tutorial
-install -p -m0644 docs/html/gtk_tut.html docs/html/gtk_tut-[0-9]*.html docs/html/*.gif tmpdocs/tutorial
-for dir in examples/* ; do
-    if [ -d $dir ] ; then
-       ./mkinstalldirs tmpdocs/$dir
-       for file in $dir/* ; do
-          case $file in
-	     *pre1.2.7)
-	        ;;
-	     *)
-                install -p -m0644 $file tmpdocs/$dir
-		;;
-	  esac
-       done
-    fi
+%{__install} -p -m0644 docs/html/gtk_tut.html docs/html/gtk_tut-[0-9]*.html docs/html/*.gif tmpdocs/tutorial
+for dir in examples/*; do
+	if [ -d $dir ]; then
+		./mkinstalldirs tmpdocs/$dir
+		for file in $dir/* ; do
+			case $file in
+			*pre1.2.7)
+				;;
+			*)
+				%{__install} -p -m0644 $file tmpdocs/$dir
+				;;
+			esac
+		done
+	fi
 done
 
-install -p -m644 -D %{SOURCE1} $RPM_BUILD_ROOT/etc/gtk/gtkrc
+%{__install} -p -m644 -D %{SOURCE1} %{buildroot}/etc/gtk/gtkrc
 
 # Install some extra gtkrc files to improve functioning of GTK+
 # in UTF-8 locales for Chinese, Japanese, Korean.
-for i in %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6} ; do
-  install -p -m0644 $i $RPM_BUILD_ROOT/etc/gtk/
+for i in %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6}; do
+	%{__install} -p -m0644 $i %{buildroot}/etc/gtk/
 done
 
 # We don't ship the info files
-rm -rf $RPM_BUILD_ROOT%{_infodir}
+%{__rm} -rf %{buildroot}%{_infodir}
 
 # .la fies... die die die.
-rm -rf $RPM_BUILD_ROOT%{_libdir}/lib*.la
+%{__rm} -rf %{buildroot}%{_libdir}/lib*.la
 # despite use of --disable-static, delete static libs that get built anyway
-rm -f  $RPM_BUILD_ROOT%{_libdir}/lib*.a
+%{__rm} -rf %{buildroot}%{_libdir}/lib*.a
 
 %find_lang %{name}
 
 
 %check
-make check LIBTOOL=%{_bindir}/libtool
+%{__make} check LIBTOOL=%{_bindir}/libtool
 
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+%{__rm} -rf %{buildroot}
 
 
 %post -p /sbin/ldconfig
@@ -222,7 +229,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING ChangeLog NEWS README TODO
 %{_libdir}/lib*.so.*
-%dir %{_datadir}/themes
+%dir %{_datadir}/themes/
 %{_datadir}/themes/Default/
 %dir %{_sysconfdir}/gtk/
 %config(noreplace) %{_sysconfdir}/gtk/*
@@ -240,8 +247,14 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
-* Tue Feb 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.2.10-67
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+* Fri Apr 17 2009 Paul Howarth <paul@city-fan.org> 1:1.2.10-68
+- remove unused shared library dependencies
+- use install -p to maintain timestamps where reasonable
+- recode docs as UTF-8
+- cosmetic spec changes
+
+* Tue Feb 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> 1:1.2.10-67
+- rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
 * Thu Oct  2 2008 Patrice Dumas <pertusus@free.fr> 1:1.2.10-66
 - rebase the ahiguti patch
