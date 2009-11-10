@@ -2,7 +2,7 @@ Summary:	The GIMP ToolKit
 Name:		gtk+
 Epoch:		1
 Version:	1.2.10
-Release:	69%{?dist}
+Release:	70%{?dist}
 License:	LGPLv2+
 Group:		System Environment/Libraries
 URL:		http://www.gtk.org/
@@ -228,27 +228,33 @@ done
 %files -f %{name}.lang
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING ChangeLog NEWS README TODO
-%{_libdir}/lib*.so.*
-%dir %{_datadir}/themes/
+%{_libdir}/libgdk-1.2.so.*
+%{_libdir}/libgtk-1.2.so.*
 %{_datadir}/themes/Default/
 %dir %{_sysconfdir}/gtk/
-%config(noreplace) %{_sysconfdir}/gtk/*
+%config(noreplace) %{_sysconfdir}/gtk/gtkrc*
 
 %files devel
 %defattr(-,root,root,-)
 %doc tmpdocs/tutorial/
 %doc tmpdocs/examples/
 %{_bindir}/gtk-config
-%{_datadir}/aclocal/*
-%{_includedir}/*
-%{_libdir}/lib*.so
-%{_libdir}/pkgconfig/*.pc
-%{_mandir}/man1/*
+%{_includedir}/gtk-1.2/
+%{_libdir}/libgdk.so
+%{_libdir}/libgtk.so
+%{_libdir}/pkgconfig/gdk.pc
+%{_libdir}/pkgconfig/gtk+.pc
+%{_datadir}/aclocal/gtk.m4
+%{_mandir}/man1/gtk-config.1*
 
 
 %changelog
-* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.2.10-69
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+* Tue Nov 10 2009 Paul Howarth <paul@city-fan.org> 1:1.2.10-70
+- don't own dir %%{_datadir}/themes/ (owned by filesystem since F-8, #534097)
+- make %%files lists more specific
+
+* Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> 1:1.2.10-69
+- rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
 * Fri Apr 17 2009 Paul Howarth <paul@city-fan.org> 1:1.2.10-68
 - remove unused shared library dependencies
