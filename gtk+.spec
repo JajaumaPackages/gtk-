@@ -2,12 +2,12 @@ Summary:	The GIMP ToolKit
 Name:		gtk+
 Epoch:		1
 Version:	1.2.10
-Release:	71%{?dist}
+Release:	72%{?dist}
 License:	LGPLv2+
 Group:		System Environment/Libraries
 URL:		http://www.gtk.org/
 Source0:	ftp://ftp.gimp.org/pub/gtk/v1.2/gtk+-%{version}.tar.gz
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(id -nu)
 
 Provides:	gtk1 = %{version}-%{release}
 
@@ -143,41 +143,41 @@ Libraries, header files and documentation for developing GTK+
 # The original config.{guess,sub} do not work on x86_64
 #
 # The following /usr/lib cannot be %%_libdir !!
-%{__cp} -p /usr/lib/rpm/config.{guess,sub} .
+cp -p /usr/lib/rpm/config.{guess,sub} .
 
-#%{__cp} -f %{_datadir}/aclocal/libtool.m4 .
-#/usr/bin/libtoolize --copy --force
-/usr/bin/automake-1.4
-#/usr/bin/aclocal-1.4
-/usr/bin/autoconf-2.13
-/usr/bin/autoheader-2.13
+#cp -f %{_datadir}/aclocal/libtool.m4 .
+#libtoolize --copy --force
+automake-1.4
+#aclocal-1.4
+autoconf-2.13
+autoheader-2.13
 
 # Recode docs as UTF-8
 for doc in ChangeLog examples/calendar/calendar.c; do
-	/usr/bin/iconv -f iso-8859-1 -t utf-8 < ${doc} > ${doc}.utf8
-	%{__mv} ${doc}.utf8 ${doc}
+	iconv -f iso-8859-1 -t utf-8 < ${doc} > ${doc}.utf8
+	mv ${doc}.utf8 ${doc}
 done
 
 %build
-LIBTOOL=%{_bindir}/libtool \
+LIBTOOL=/usr/bin/libtool \
 %configure \
 	--disable-static \
 	--with-xinput=xfree \
 	--with-native-locale
 
-%{__make} %{?_smp_mflags} LIBTOOL=%{_bindir}/libtool
+make %{?_smp_mflags} LIBTOOL=/usr/bin/libtool
 
 
 %install
-%{__rm} -rf %{buildroot}
+rm -rf %{buildroot}
 
-%{__make} install DESTDIR=%{buildroot} LIBTOOL=%{_bindir}/libtool INSTALL="%{__install} -p"
+make install DESTDIR=%{buildroot} LIBTOOL=/usr/bin/libtool INSTALL="install -p"
 
 #
 # Make cleaned-up versions of examples and tutorial for installation
 #
 ./mkinstalldirs tmpdocs/tutorial
-%{__install} -p -m0644 docs/html/gtk_tut.html docs/html/gtk_tut-[0-9]*.html docs/html/*.gif tmpdocs/tutorial
+install -p -m0644 docs/html/gtk_tut.html docs/html/gtk_tut-[0-9]*.html docs/html/*.gif tmpdocs/tutorial
 for dir in examples/*; do
 	if [ -d $dir ]; then
 		./mkinstalldirs tmpdocs/$dir
@@ -186,38 +186,38 @@ for dir in examples/*; do
 			*pre1.2.7)
 				;;
 			*)
-				%{__install} -p -m0644 $file tmpdocs/$dir
+				install -p -m0644 $file tmpdocs/$dir
 				;;
 			esac
 		done
 	fi
 done
 
-%{__install} -p -m644 -D %{SOURCE1} %{buildroot}/etc/gtk/gtkrc
+install -p -m644 -D %{SOURCE1} %{buildroot}/etc/gtk/gtkrc
 
 # Install some extra gtkrc files to improve functioning of GTK+
 # in UTF-8 locales for Chinese, Japanese, Korean.
 for i in %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6}; do
-	%{__install} -p -m0644 $i %{buildroot}/etc/gtk/
+	install -p -m0644 $i %{buildroot}/etc/gtk/
 done
 
 # We don't ship the info files
-%{__rm} -rf %{buildroot}%{_infodir}
+rm -rf %{buildroot}%{_infodir}
 
 # .la fies... die die die.
-%{__rm} -rf %{buildroot}%{_libdir}/lib*.la
+rm -rf %{buildroot}%{_libdir}/lib*.la
 # despite use of --disable-static, delete static libs that get built anyway
-%{__rm} -rf %{buildroot}%{_libdir}/lib*.a
+rm -rf %{buildroot}%{_libdir}/lib*.a
 
 %find_lang %{name}
 
 
 %check
-%{__make} check LIBTOOL=%{_bindir}/libtool
+make check LIBTOOL=/usr/bin/libtool
 
 
 %clean
-%{__rm} -rf %{buildroot}
+rm -rf %{buildroot}
 
 
 %post -p /sbin/ldconfig
@@ -249,8 +249,11 @@ done
 
 
 %changelog
-* Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.2.10-71
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+* Thu Jan  5 2012 Paul Howarth <paul@city-fan.org> 1:1.2.10-72
+- nobody else likes macros for commands
+
+* Wed Feb  9 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> 1:1.2.10-71
+- rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
 * Tue Nov 10 2009 Paul Howarth <paul@city-fan.org> 1:1.2.10-70
 - don't own dir %%{_datadir}/themes/ (owned by filesystem since F-8, #534097)
