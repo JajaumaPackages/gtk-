@@ -2,7 +2,7 @@ Summary:	The GIMP ToolKit
 Name:		gtk+
 Epoch:		1
 Version:	1.2.10
-Release:	74%{?dist}
+Release:	75%{?dist}
 License:	LGPLv2+
 Group:		System Environment/Libraries
 URL:		http://www.gtk.org/
@@ -71,9 +71,10 @@ Patch33:	gtk+-1.2.10-no_undefined.patch
 Patch34:	gtk+-1.2.10-multilib.patch
 # Remove redundant shared library dependencies
 Patch35:	gtk+-1.2.10-unused-deps.patch
+# Avoid having to run autotools at build time
+Patch36:	gtk+-1.2.10-autotools.patch
 
 BuildRequires:	glib-devel >= 1:%{version}
-BuildRequires:	automake14 autoconf213
 BuildRequires:	libtool
 BuildRequires:	gettext
 %if 0%{?fedora} > 4 || 0%{?rhel} > 4
@@ -139,18 +140,12 @@ Libraries, header files and documentation for developing GTK+
 %patch33 -p1 -b .no_undefined
 %patch34 -p1 -b .multilib
 %patch35 -p1 -b .unused-deps
+%patch36 -b .autotools
 
-# The original config.{guess,sub} do not work on x86_64
+# The original config.{guess,sub} do not work on x86_64, aarch64 etc.
 #
 # The following /usr/lib cannot be %%_libdir !!
 cp -p /usr/lib/rpm/config.{guess,sub} .
-
-#cp -f %{_datadir}/aclocal/libtool.m4 .
-#libtoolize --copy --force
-automake-1.4
-#aclocal-1.4
-autoconf-2.13
-autoheader-2.13
 
 # Recode docs as UTF-8
 for doc in ChangeLog examples/calendar/calendar.c; do
@@ -249,6 +244,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Fri May 10 2013 Paul Howarth <paul@city-fan.org> - 1:1.2.10-75
+- Avoid having to run autotools at build time (#961362)
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.2.10-74
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
@@ -356,7 +354,7 @@ rm -rf %{buildroot}
 * Mon Nov  7 2005 Matthias Clasen <mclasen@redhat.com> 1:1.2.10-47
 - Remove .la files and static libs
 
-* Tue Nov  7 2005 Matthias Clasen <mclasen@redhat.com> 1:1.2.10-46
+* Mon Nov  7 2005 Matthias Clasen <mclasen@redhat.com> 1:1.2.10-46
 - Rebuilt
 
 * Tue Nov  1 2005 Matthias Clasen <mclasen@redhat.com> 1:1.2.10-45
@@ -374,7 +372,7 @@ rm -rf %{buildroot}
 * Thu Jun 24 2004 Matthias Clasen <mclasen@redhat.com>
 - add missing buildrequires (#124159)
 
-* Tue Jun 16 2004 Matthias Clasen <mclasen@redhat.com>
+* Wed Jun 16 2004 Matthias Clasen <mclasen@redhat.com>
 - rebuilt for RHEL3 U3
 
 * Tue Jun 15 2004 Elliot Lee <sopwith@redhat.com>
@@ -656,7 +654,7 @@ rm -rf %{buildroot}
 * Tue Aug 04 1998 Michael Fulbright <msf@redhat.com>
 - change %%postun to %%preun
 
-* Mon Jun 27 1998 Shawn T. Amundson
+* Mon Jun 29 1998 Shawn T. Amundson
 - Changed version to 1.1.0
 
 * Thu Jun 11 1998 Dick Porter <dick@cymru.net>
@@ -665,7 +663,7 @@ rm -rf %{buildroot}
 * Mon Apr 13 1998 Marc Ewing <marc@redhat.com>
 - Split out glib package
 
-* Tue Apr  8 1998 Shawn T. Amundson <amundson@gtk.org>
+* Wed Apr  8 1998 Shawn T. Amundson <amundson@gtk.org>
 - Changed version to 1.0.0
 
 * Tue Apr  7 1998 Owen Taylor <otaylor@gtk.org>
@@ -683,10 +681,10 @@ rm -rf %{buildroot}
 - Added -k to the SMP make line.
 - Added lib/glib to file list.
 
-* Fri Mar 14 1998 Shawn T. Amundson <amundson@gimp.org>
+* Fri Mar 13 1998 Shawn T. Amundson <amundson@gimp.org>
 - Changed version to 0.99.7
 
-* Fri Mar 14 1998 Shawn T. Amundson <amundson@gimp.org>
+* Fri Mar 13 1998 Shawn T. Amundson <amundson@gimp.org>
 - Updated ftp url and changed version to 0.99.6
 
 * Thu Mar 12 1998 Marc Ewing <marc@redhat.com>
