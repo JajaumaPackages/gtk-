@@ -2,7 +2,7 @@ Summary:	The GIMP ToolKit
 Name:		gtk+
 Epoch:		1
 Version:	1.2.10
-Release:	76%{?dist}
+Release:	77%{?dist}
 License:	LGPLv2+
 Group:		System Environment/Libraries
 URL:		http://www.gtk.org/
@@ -73,6 +73,8 @@ Patch34:	gtk+-1.2.10-multilib.patch
 Patch35:	gtk+-1.2.10-unused-deps.patch
 # Avoid having to run autotools at build time
 Patch36:	gtk+-1.2.10-autotools.patch
+# Use format strings properly
+Patch37:	gtk+-1.2.10-format.patch
 
 BuildRequires:	glib-devel >= 1:%{version}
 BuildRequires:	libtool
@@ -141,6 +143,7 @@ Libraries, header files and documentation for developing GTK+
 %patch34 -p1 -b .multilib
 %patch35 -p1 -b .unused-deps
 %patch36 -b .autotools
+%patch37 -b .format
 
 # The original config.{guess,sub} do not work on x86_64, aarch64 etc.
 #
@@ -244,6 +247,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Thu Nov 21 2013 Paul Howarth <paul@city-fan.org> - 1:1.2.10-77
+- Use format strings properly
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.2.10-76
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
