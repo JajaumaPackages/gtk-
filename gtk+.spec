@@ -2,11 +2,11 @@ Summary:	The GIMP ToolKit
 Name:		gtk+
 Epoch:		1
 Version:	1.2.10
-Release:	78%{?dist}
+Release:	79%{?dist}
 License:	LGPLv2+
 Group:		System Environment/Libraries
 URL:		http://www.gtk.org/
-Source0:	ftp://ftp.gimp.org/pub/gtk/v1.2/gtk+-%{version}.tar.gz
+Source0:	http://download.gimp.org/pub/gtk/v1.2/gtk+-%{version}.tar.gz
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(id -nu)
 
 Provides:	gtk1 = %{version}-%{release}
@@ -247,6 +247,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Aug 05 2014 Nils Philippsen <nils@redhat.com> - 1:1.2.10-79
+- update source URL
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:1.2.10-78
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
